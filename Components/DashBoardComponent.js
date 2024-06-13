@@ -8,6 +8,7 @@ const Screen = ({navigation}) => {
     return <>
       <AppButton title="Open Map" onPress={() => navigation.navigate('Map')}/>
       <AppButton title="Add a Market" onPress={() => navigation.navigate('Market Add')}/>
+      <AppButton title="Profile Page" onPress={() => navigation.navigate('Profile')}/>
     </>
   
 };

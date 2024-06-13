@@ -7,6 +7,7 @@ import SignUp from './Components/SignUpComponent';
 import SignIn from './Components/SignInComponent';
 import DashBoard from './Components/DashBoardComponent';
 import MarketAdd from './Components/MarketAddComponent';
+import ProfilePage from "./Components/ProfileComponent";
 
 const Stack = createNativeStackNavigator();
 
@@ -19,6 +20,7 @@ const MyStack = () => {
         <Stack.Screen name="Login" component={SignIn} options={{title: 'Login'}}/>
         <Stack.Screen name = "Map" component = {Waiting_Driver_Screen} options = {{title: 'Map'}}/>
         <Stack.Screen name = "Market Add" component = {MarketAdd} options = {{title: 'Market Add'}}/>
+        <Stack.Screen name = "Profile" component = {ProfilePage} options = {{title: 'Profile Page'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
