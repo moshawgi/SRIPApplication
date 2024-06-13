@@ -16,7 +16,6 @@ const SignIn = ({navigation}) => {
         style={styles.input}
         onChangeText = {onChangePassword}
         placeholder="Password"/>
-      <DropdownComponent/>
       <Button
         title="Sign In"
         onPress={() =>

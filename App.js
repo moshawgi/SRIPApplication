@@ -2,11 +2,11 @@ import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Waiting_Driver_Screen from "./MapComponent"
-import SignUp from './SignUpComponent';
-import SignIn from './SignInComponent';
-import DashBoard from './DashBoardComponent';
-import MarketAdd from './MarketAddComponent';
+import Waiting_Driver_Screen from "./Components/MapComponent"
+import SignUp from './Components/SignUpComponent';
+import SignIn from './Components/SignInComponent';
+import DashBoard from './Components/DashBoardComponent';
+import MarketAdd from './Components/MarketAddComponent';
 
 const Stack = createNativeStackNavigator();
 
