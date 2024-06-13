@@ -5,7 +5,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Waiting_Driver_Screen from "./MapComponent"
 import SignUp from './SignUpComponent';
 import SignIn from './SignInComponent';
-import ProfileScreen from './ProfileScreenComponent';
+import DashBoard from './DashBoardComponent';
+import MarketAdd from './MarketAddComponent';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,9 +15,10 @@ const MyStack = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Register" component={SignUp} options={{title: 'Register'}}/>
-        <Stack.Screen name="Profile" component={ProfileScreen}/>
+        <Stack.Screen name="Dashboard" component={DashBoard} options={{title: 'Dashboard'}}/>
         <Stack.Screen name="Login" component={SignIn} options={{title: 'Login'}}/>
-        <Stack.Screen name = "Map" component = {Waiting_Driver_Screen}/>
+        <Stack.Screen name = "Map" component = {Waiting_Driver_Screen} options = {{title: 'Map'}}/>
+        <Stack.Screen name = "Market Add" component = {MarketAdd} options = {{title: 'Market Add'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -20,11 +20,11 @@ const SignIn = ({navigation}) => {
       <Button
         title="Sign In"
         onPress={() =>
-          navigation.navigate('Profile', {name: email})
+          navigation.navigate('Dashboard')
         }
       />
       <Button
-        title="Create Account"
+        title="Sign Up"
         onPress={() =>
           navigation.navigate('Register')
         }

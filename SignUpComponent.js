@@ -30,7 +30,7 @@ const SignUp = ({navigation}) => {
       <Button
         title="Create Account"
         onPress={() =>
-          navigation.navigate('Profile', {name: firstName})
+          navigation.navigate('Dashboard')
         }
       />
       <Button
