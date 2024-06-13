@@ -5,6 +5,8 @@ import DropdownComponent from './DropdownComponent';
 const SignUp = ({navigation}) => {
     const [firstName, onChangeFirstName] = React.useState('');
     const [lastName, onChangeLastName] = React.useState('');
+    const [email, onChangeEmail] = React.useState('');
+    const [password, onChangePassword] = React.useState('');
     return (
       <>
       <TextInput
@@ -15,6 +17,15 @@ const SignUp = ({navigation}) => {
         style={styles.input}
         onChangeText = {onChangeLastName}
         placeholder="Last Name"/>
+    <TextInput
+        style={styles.input}
+        onChangeText = {onChangeEmail}
+        placeholder="Email"/>
+    <TextInput
+        secureTextEntry
+        style={styles.input}
+        onChangeText = {onChangePassword}
+        placeholder="Password"/>
       <DropdownComponent/>
       <Button
         title="Create Account"

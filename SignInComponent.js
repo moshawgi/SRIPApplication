@@ -3,14 +3,14 @@ import {Button, Text, StyleSheet, TextInput, View} from 'react-native';
 import DropdownComponent from './DropdownComponent';
 
 const SignIn = ({navigation}) => {
-    const [userName, onChangeUserName] = React.useState('');
+    const [email, onChangeEmail] = React.useState('');
     const [password, onChangePassword] = React.useState('');
     return (
       <>
       <TextInput
         style={styles.input}
-        onChangeText = {onChangeUserName}
-        placeholder="Username"/>
+        onChangeText = {onChangeEmail}
+        placeholder="Email"/>
       <TextInput
         secureTextEntry
         style={styles.input}
@@ -20,7 +20,7 @@ const SignIn = ({navigation}) => {
       <Button
         title="Sign In"
         onPress={() =>
-          navigation.navigate('Profile', {name: userName})
+          navigation.navigate('Profile', {name: email})
         }
       />
       <Button
