@@ -17,11 +17,24 @@ const Waiting_Driver_Screen = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
 
+  const createTwoButtonAlert = (title, message) => {
+    output = "cancel"
+    Alert.alert(title, message, [
+      {text: 'OK', onPress: () => {}},
+      {
+        text: 'Cancel',
+        onPress: () => {},
+        style: 'cancel',
+      },
+    ])
+  };
+
   useEffect(() => {
     const getLocation = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         console.log("Permission to access location was denied");
+        createTwoButtonAlert("Permissions Denied", "Please grant this app location permissions")
         return;
       }
 

@@ -34,7 +34,7 @@ const ProfilePage = ({navigation}) => {
         onChangeText = {setAge}
         placeholder="Age"/>
       <View style={styles.saveChanges}>
-      <AppButton title="Save Changes"/>
+      <AppButton style = {styles.appButtonContainer} title="Save Changes"/>
       </View>
       </>
     );
@@ -62,6 +62,15 @@ const styles = StyleSheet.create({
       top:250,
       width: 200,
       left: 90
+    },
+    appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#009688",
+      borderRadius: 10,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      width: 250,
+      alignSelf: 'center'
     }
 });
 

@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, Alert} from 'react-native';
 import DropdownComponent from './DropdownComponent';
 import axios from 'axios'
+import AppButton from './AppButtonComponent';
 
 const SignUp = ({navigation}) => {
     const [firstName, setFirstName] = React.useState('');
@@ -50,7 +51,8 @@ const SignUp = ({navigation}) => {
         placeholder="Confirm Password"
         value = {secondPassword}/>
       <DropdownComponent/>
-      <Button
+      <AppButton
+        style = {styles.appButtonContainer}
         title="Create Account"
         onPress={() => {
           if (password !== secondPassword) {
@@ -80,7 +82,8 @@ const SignUp = ({navigation}) => {
           }
         }
       />
-      <Button
+      <AppButton
+        style = {[styles.appButtonContainer, styles.signInContainer]}
         title="Sign In"
         onPress={() =>
           navigation.navigate('Login', {name: firstName})
@@ -97,6 +100,19 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
     },
+    appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#009688",
+      borderRadius: 10,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      width: 250,
+      alignSelf: 'center',
+      top: 60
+    },
+    signInContainer: {
+      top: 90
+    }
 });
 
 export default SignUp

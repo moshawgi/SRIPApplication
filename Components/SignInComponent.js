@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, Alert} from 'react-native';
 import DropdownComponent from './DropdownComponent';
 import axios from 'axios'
+import AppButton from './AppButtonComponent';
 
 const SignIn = ({navigation}) => {
     const [email, setEmail] = React.useState('');
@@ -28,7 +29,8 @@ const SignIn = ({navigation}) => {
         style={styles.input}
         onChangeText = {setPassword}
         placeholder="Password"/>
-      <Button
+      <AppButton
+        style = {styles.appButtonContainer}
         title="Sign In"
         onPress={() => {
             axios.post('http://10.50.38.167:3300/auth/login', {
@@ -50,7 +52,8 @@ const SignIn = ({navigation}) => {
           }
         }
       />
-      <Button
+      <AppButton
+        style = {[styles.appButtonContainer, styles.signUpContainer]}
         title="Sign Up"
         onPress={() => {
             navigation.navigate('Register')
@@ -68,6 +71,19 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
     },
+    appButtonContainer: {
+      elevation: 8,
+      backgroundColor: "#009688",
+      borderRadius: 10,
+      paddingVertical: 10,
+      paddingHorizontal: 12,
+      width: 250,
+      alignSelf: 'center',
+      top: 20
+    },
+    signUpContainer: {
+      top: 50
+    }
 });
 
 export default SignIn
