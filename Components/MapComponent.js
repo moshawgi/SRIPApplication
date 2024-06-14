@@ -54,7 +54,6 @@ const Waiting_Driver_Screen = () => {
           )}
         </MapView>
       )}
-      {/* Rest of your code */}
     </View>
   );
 };

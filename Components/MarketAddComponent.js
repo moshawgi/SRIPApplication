@@ -6,6 +6,7 @@ import AppButton from './AppButtonComponent.js';
 const MarketAdd = ({navigation}) => {
     const [meetingTimes, setMeetingTimes] = React.useState('');
     const [address, setAddress] = React.useState('');
+    const [description, setDescription] = React.useState('');
     return (
       <>
       <TextInput
@@ -13,6 +14,16 @@ const MarketAdd = ({navigation}) => {
         onChangeText = {setMeetingTimes}
         placeholder="Meeting Times"
         value={meetingTimes}/>
+      <TextInput
+        style={styles.input}
+        onChangeText = {setAddress}
+        placeholder="Address"
+        value={address}/>
+      <TextInput
+        style={styles.description}
+        onChangeText = {setDescription}
+        placeholder="Description"
+        value={address}/>
       <TextInput
         style={styles.input}
         onChangeText = {setAddress}
@@ -33,6 +44,12 @@ const styles = StyleSheet.create({
       borderWidth: 1,
       padding: 10,
     },
+    description: {
+      height: 200,
+      margin: 12,
+      borderWidth: 1,
+      padding: 10,
+    }
 });
 
 export default MarketAdd
