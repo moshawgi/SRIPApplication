@@ -3,7 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 
-const DropdownComponent = () => {
+const DropdownComponent = (holder) => {
     const [value, setValue] = React.useState(null);
   
     const placeholder = {

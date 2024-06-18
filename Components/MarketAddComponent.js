@@ -2,6 +2,7 @@ import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View} from 'react-native';
 import AppButton from './AppButtonComponent.js';
 import UploadImage from './ImageUploadComponent.js';
+import ImagePickerExample from './testComponent.js';
 
 
 const MarketAdd = ({navigation}) => {
@@ -33,7 +34,7 @@ const MarketAdd = ({navigation}) => {
         placeholder="Description"
         multiline = {true}
         value={description}/>
-      <UploadImage/>
+      <ImagePickerExample/>
       <View style={styles.submit}>
       <AppButton
         style={styles.appButtonContainer}

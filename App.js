@@ -8,6 +8,8 @@ import SignIn from './Components/SignInComponent';
 import DashBoard from './Components/DashBoardComponent';
 import MarketAdd from './Components/MarketAddComponent';
 import ProfilePage from "./Components/ProfileComponent";
+import MessageComponent from './Components/MessageComponent';
+import Chat from './Components/ChatComponent';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,6 +23,8 @@ const MyStack = () => {
         <Stack.Screen name = "Map" component = {Waiting_Driver_Screen} options = {{title: 'Map'}}/>
         <Stack.Screen name = "Market Add" component = {MarketAdd} options = {{title: 'Market Add'}}/>
         <Stack.Screen name = "Profile" component = {ProfilePage} options = {{title: 'Profile Page'}}/>
+        <Stack.Screen name = "Messages" component = {MessageComponent} options = {{title: 'Messages'}}/>
+        <Stack.Screen name = "Chat" component = {Chat} options = {{title: 'Chat'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

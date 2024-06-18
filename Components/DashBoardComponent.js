@@ -9,6 +9,7 @@ const Screen = ({navigation}) => {
       <AppButton style = {styles.appButtonContainer} title="Open Map" onPress={() => navigation.navigate('Map')}/>
       <AppButton style = {styles.appButtonContainer} title="Add a Market" onPress={() => navigation.navigate('Market Add')}/>
       <AppButton style = {styles.appButtonContainer} title="Profile Page" onPress={() => navigation.navigate('Profile')}/>
+      <AppButton style = {styles.appButtonContainer} title="Messages" onPress={() => navigation.navigate('Messages')}/>
     </>
 };
 

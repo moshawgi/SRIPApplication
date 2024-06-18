@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, Alert} from 'react-native';
-import DropdownComponent from './DropdownComponent';
+import { Dropdown } from 'react-native-element-dropdown';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from 'axios'
 import AppButton from './AppButtonComponent';
 
@@ -10,17 +11,33 @@ const SignUp = ({navigation}) => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [secondPassword, setSecondPassword] = React.useState('');
+
+    const [value, setValue] = React.useState(null);
+  
+    const placeholder = {
+      label: 'What Type of User Will You Be',
+      value: null,
+    };
+  
+    const options = [
+      { label: 'Farmer', value: 'Farmer' },
+      { label: 'Market Owner', value: 'Market Owner' },
+      { label: 'Consumer', value: 'Consumer' },
+      { label: 'Transporter', value: 'Transporter' },
+    ];
+
     const createTwoButtonAlert = (title, message) => {
       output = "cancel"
       Alert.alert(title, message, [
+        {text: 'OK', onPress: () => {}},
         {
           text: 'Cancel',
           onPress: () => {},
           style: 'cancel',
         },
-        {text: 'OK', onPress: () => {}},
       ])
     };
+    let holderVariable = []
     return (
       <>
       <TextInput
@@ -50,11 +67,34 @@ const SignUp = ({navigation}) => {
         onChangeText = {setSecondPassword}
         placeholder="Confirm Password"
         value = {secondPassword}/>
-      <DropdownComponent/>
+      <View>
+        <Dropdown
+          style={styles.dropdown}
+          placeholderStyle={styles.placeholderStyle}
+          selectedTextStyle={styles.selectedTextStyle}
+          inputSearchStyle={styles.inputSearchStyle}
+          iconStyle={styles.iconStyle}
+          data={options}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder="Select your user type"
+          searchPlaceholder="Search..."
+          value={value}
+          onChange={item => {
+            setValue(item.value);
+          }}
+          renderLeftIcon={() => (
+            <AntDesign style={styles.icon} color="black" name="Safety" size={20} />
+          )}
+        />
+      </View>
       <AppButton
         style = {styles.appButtonContainer}
         title="Create Account"
         onPress={() => {
+          console.log(value)
           if (password !== secondPassword) {
             createTwoButtonAlert("Alert", "Passwords must match!");
             return 0;
@@ -62,10 +102,10 @@ const SignUp = ({navigation}) => {
           axios.post('http://10.50.38.167:3300/auth/signup', {
               userName:email,
               password:password,
-              accountType: "Farmer",
+              accountType: value,
               firstName: firstName,
               lastName: lastName,
-              confirmPassword: secondPassword
+              confirmPassword: secondPassword,
           })
           .then(function (response) {
               if (response.data.success) {
@@ -112,7 +152,27 @@ const styles = StyleSheet.create({
     },
     signInContainer: {
       top: 90
-    }
+    },
+    dropdown: {
+      margin: 16,
+      height: 50,
+      borderBottomColor: 'gray',
+      borderBottomWidth: 0.5,
+    },
+    placeholderStyle: {
+      fontSize: 16,
+    },
+    selectedTextStyle: {
+      fontSize: 16,
+    },
+    iconStyle: {
+      width: 20,
+      height: 20,
+    },
+    inputSearchStyle: {
+      height: 40,
+      fontSize: 16,
+    },
 });
 
 export default SignUp

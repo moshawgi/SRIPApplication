@@ -10,12 +10,12 @@ const SignIn = ({navigation}) => {
     const createTwoButtonAlert = (title, message) => {
       output = "cancel"
       Alert.alert(title, message, [
+        {text: 'OK', onPress: () => {}},
         {
           text: 'Cancel',
           onPress: () => {},
           style: 'cancel',
         },
-        {text: 'OK', onPress: () => {}},
       ])
     };
     return (
