@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  View,
-  TouchableOpacity,
-  Text,
-  Dimensions,
-  Image,
-} from "react-native";
+import {StyleSheet, View, TouchableOpacity, Text, Dimensions, Image} from "react-native";
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
+import axios from 'axios';
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -16,6 +10,8 @@ const windowHeight = Dimensions.get("window").height;
 const Waiting_Driver_Screen = () => {
   const [currentLocation, setCurrentLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState(null);
+  const [markers, setMarkers] = useState([<Marker coordinate={{latitude: 0, longitude: 0}} title="Your Location"/>])
+
 
   const createTwoButtonAlert = (title, message) => {
     output = "cancel"
@@ -39,15 +35,34 @@ const Waiting_Driver_Screen = () => {
       }
 
       let location = await Location.getCurrentPositionAsync({});
+      setMarkers([<Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude,}} title="Your Location"/>])
       setCurrentLocation(location.coords);
-
       setInitialRegion({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
         latitudeDelta: 0.005,
         longitudeDelta: 0.005,
       });
+      getMarkets(location)
     };
+
+    const getMarkets = async (location) => {
+      let markets = await axios.post('http://10.50.38.167:3300/auth/marketfind', {
+        coordinates: [location.coords.latitude, location.coords.longitude],
+        radius: 10,
+        miles: true
+      })
+      markets = markets.data
+      if (!markets.success) {
+        return 0;
+      }
+      markets = markets.result
+      let newMarkers = [<Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude,}} title="Your Location"/>]
+      for (let i = 0; i < markets.length; i++) {
+        newMarkers.push(<Marker coordinate={{latitude: markets[i].latitude, longitude: markets[i].longitude,}} title="Food Market"/>)
+      }
+      setMarkers(newMarkers)
+    }
 
     getLocation();
   }, []);
@@ -55,16 +70,7 @@ const Waiting_Driver_Screen = () => {
   return (
     <View style={styles.container}>
       {initialRegion && (
-        <MapView style={styles.map} initialRegion={initialRegion}>
-          {currentLocation && (
-            <Marker
-              coordinate={{
-                latitude: currentLocation.latitude,
-                longitude: currentLocation.longitude,
-              }}
-              title="Your Location"
-            />
-          )}
+        <MapView style={styles.map} initialRegion={initialRegion} children={markers}>
         </MapView>
       )}
     </View>

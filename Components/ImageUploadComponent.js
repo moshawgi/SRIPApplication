@@ -1,68 +1,53 @@
-import React, { useState, useEffect } from 'react';
-import { Image, View, Platform, TouchableOpacity, Text, StyleSheet } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
+import { useState } from 'react';
+import { Button, Image, View, StyleSheet, TouchableOpacity } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-export default function UploadImage() {
+import AppButton from './AppButtonComponent';
+
+export default function ImageUploader() {
   const [image, setImage] = useState(null);
-  useEffect(() => {
-    checkForCameraRollPermission()
-  }, []);
-  const  checkForCameraRollPermission=async()=>{
-  const { status } = await ImagePicker.getMediaLibraryPermissionsAsync();
-    if (status !== 'granted') {
-        alert("Please grant camera roll permissions inside your system's settings");
-    } else{
-        console.log('Media Permissions are granted')
-    }
-  }
-  const addImage = async () => {
-    let _image = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+
+  const pickImage = async () => {
+    // No permissions request is necessary for launching the image library
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect: [4,3],
+      aspect: [3, 3],
       quality: 1,
     });
-    console.log(JSON.stringify(_image));
-    if (!_image.cancelled) {
-      setImage(_image.uri);
+
+    console.log(result);
+
+    if (!result.canceled) {
+      setImage(result.assets[0].uri);
     }
   };
+
   return (
-            <View style={imageUploaderStyles.container}>
-                {
-                    image  && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
-                }
-                    <View style={imageUploaderStyles.uploadBtnContainer}>
-                        <TouchableOpacity onPress={addImage} style={imageUploaderStyles.uploadBtn} >
-                            <Text>{image ? 'Edit' : 'Upload'} Image</Text>
-                            <AntDesign name="camera" size={20} color="black" />
-                        </TouchableOpacity>
-                    </View>
-            </View>
+    <View style={styles.container}>
+      <AppButton style={styles.appButtonContainer} onPress={pickImage} title="Choose an Image"/>
+      {image && <Image source={{ uri: image }} style={styles.image} />}
+    </View>
   );
 }
-const imageUploaderStyles=StyleSheet.create({
-    container:{
-        elevation:2,
-        height:200,
-        width:200,
-        backgroundColor:'#efefef',
-        position:'relative',
-        borderRadius:999,
-        overflow:'hidden',
-    },
-    uploadBtnContainer:{
-        opacity:0.7,
-        position:'absolute',
-        right:0,
-        bottom:0,
-        backgroundColor:'lightgrey',
-        width:'100%',
-        height:'25%',
-    },
-    uploadBtn:{
-        display:'flex',
-        alignItems:"center",
-        justifyContent:'center'
-    }
-})
+
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  image: {
+    top: 25,
+    width: 200,
+    height: 200,
+  },
+  appButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#009688",
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    width: 250,
+    alignSelf: 'center',
+    top: 10
+  },
+});

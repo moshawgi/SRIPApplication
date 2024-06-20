@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
       top: 10,
       height: 60,
       width: 60,
-      color: "#A9A9A9"
     },
     userName: {
       position: 'absolute',

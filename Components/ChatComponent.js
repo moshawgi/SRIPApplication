@@ -1,18 +1,37 @@
 import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, Alert, TouchableOpacity, Image, Keyboard, ScrollView} from 'react-native';
-import DropdownComponent from './DropdownComponent';
-import axios from 'axios'
-import AppButton from './AppButtonComponent';
+
+let messages = [{"who": "me", "message": "hi"}, {"who": "me", "message": "how are u"}, {"who": "them", "message": "hi"}, {"who": "them", "message": "i'm doing well thanks"}]
 
 const Chat = ({navigation}) => {
     const [message, setMessage] = React.useState('');
     const [isPressed, setIsPressed] = React.useState(false)
-    const [messages, setMessages] = React.useState([<Text>Hi</Text>, <Text>Bruh</Text>])
+
+    let views = [<View style={styles.placeHolder}></View>]
+    for (let i = 0; i < messages.length; i++) {
+      if (messages[i].who === "me") {
+        views.push(<View style={styles.myMessage}><Text style={styles.message}>{messages[i].message}</Text></View>)
+      }
+      else if (messages[i].who === "them") {
+        views.push(<View style={styles.theirMessage}><Text style={styles.message}>{messages[i].message}</Text></View>)
+      }
+    }
+
+    const [messageViews, setMessageViews] = React.useState(views)
+
     let inputProps = {style: isPressed ? styles.inputHigh : styles.input, onTouchStart:() => {setIsPressed(true)},  placeholder: "Send a message", value: message, onChangeText: setMessage}
-    let buttonProps = {style: isPressed ? styles.appButtonContainerHigh : styles.appButtonContainer, onPress:() => {setIsPressed(false); Keyboard.dismiss(); setMessages(messages.push(<Text>{message}</Text>)); setMessage("");}}
+    let buttonProps = {style: isPressed ? styles.appButtonContainerHigh : styles.appButtonContainer, onPress:() => {
+        setIsPressed(false); 
+        Keyboard.dismiss(); 
+        messages.push({"who": "me", "message": `${message}`}); 
+        views.push(<View style={styles.myMessage}><Text style={styles.message}>{message}</Text></View>)
+        setMessageViews(views);
+        setMessage("");
+      }
+    }
     return (
       <>
-      <ScrollView style={styles.scrollView} children={messages}></ScrollView>
+      <ScrollView style={styles.scrollView} children={messageViews}></ScrollView>
       <View style={styles.view}>
         <TouchableOpacity>
           <TextInput {...inputProps}/>
@@ -26,6 +45,41 @@ const Chat = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+    placeHolder: {
+      height: 10
+    },
+    message: {
+      textAlign: "center",
+      fontSize: 16,
+      maxWidth: 250,
+      flex: 1,
+      flexWrap: "wrap"
+    },
+    myMessage: {
+      position: "relative",
+      borderRadius: 10,
+      backgroundColor: "#E5E5E5",
+      alignContent: "center",
+      top: 0,
+      alignSelf: "flex-end",
+      marginRight: 10,
+      marginTop: 5,
+      flex: 1,
+      flexWrap: "wrap",
+      padding: 10
+    },
+    theirMessage: {
+      position: "relative",
+      borderRadius: 10,
+      backgroundColor: "#E5E5E5",
+      verticalAlign: "center",
+      marginLeft: 10,
+      marginTop: 5,
+      alignSelf: "flex-start",
+      flex: 1,
+      flexWrap: "wrap",
+      padding: 10
+    },
     scrollView: {
       borderWidth: 0,
       backgroundColor:'white',
