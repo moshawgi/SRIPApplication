@@ -2,18 +2,29 @@ import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, Alert} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
-import axios from 'axios'
+import axios from 'axios';
 import AppButton from './AppButtonComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SignUp = ({navigation}) => {
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
     const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
+    const [password, setPassword] = React.useState('')
     const [secondPassword, setSecondPassword] = React.useState('');
-
     const [value, setValue] = React.useState(null);
-  
+
+    async function main() {
+      let token = await AsyncStorage.getItem("token")
+      if (token) {
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Dashboard' }],
+        });
+      }
+    }
+    main()
+
     const placeholder = {
       label: 'What Type of User Will You Be',
       value: null,
@@ -37,7 +48,7 @@ const SignUp = ({navigation}) => {
         },
       ])
     };
-    let holderVariable = []
+
     return (
       <>
       <TextInput
@@ -110,7 +121,7 @@ const SignUp = ({navigation}) => {
           .then(function (response) {
               if (response.data.success) {
                 createTwoButtonAlert("Success", response.data.success);
-                navigation.navigate('Dashboard')
+                navigation.navigate('Login')
               }
               else if (response.data.error) {
                 createTwoButtonAlert("Error", response.data.error)

@@ -10,9 +10,9 @@ import MarketAdd from './Components/MarketAddComponent';
 import ProfilePage from "./Components/ProfileComponent";
 import MessageComponent from './Components/MessageComponent';
 import Chat from './Components/ChatComponent';
+import ProfileSearch from './Components/ProfileSearchComponent'
 
 const Stack = createNativeStackNavigator();
-
 const MyStack = () => {
   return (
     <NavigationContainer>
@@ -25,6 +25,7 @@ const MyStack = () => {
         <Stack.Screen name = "Profile" component = {ProfilePage} options = {{title: 'Profile Page'}}/>
         <Stack.Screen name = "Messages" component = {MessageComponent} options = {{title: 'Messages'}}/>
         <Stack.Screen name = "Chat" component = {Chat} options = {{title: 'Chat'}}/>
+        <Stack.Screen name = "Profile Search" component = {ProfileSearch} options = {{title: 'Search'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

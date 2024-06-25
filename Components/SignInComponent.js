@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, Alert} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropdownComponent from './DropdownComponent';
 import axios from 'axios'
 import AppButton from './AppButtonComponent';
@@ -40,6 +41,8 @@ const SignIn = ({navigation}) => {
             .then(function (response) {
               if (response.data.success) {
                 createTwoButtonAlert("Success", response.data.success)
+                AsyncStorage.setItem("token", response.data.token)
+                .then(function() {AsyncStorage.getItem("token").then((response) => {console.log(response)})})
                 navigation.navigate('Dashboard')
               }
               else if (response.data.error) {

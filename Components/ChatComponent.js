@@ -1,11 +1,69 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, Alert, TouchableOpacity, Image, Keyboard, ScrollView} from 'react-native';
+import useWebSocket from 'react-native-use-websocket';
 
-let messages = [{"who": "me", "message": "hi"}, {"who": "me", "message": "how are u"}, {"who": "them", "message": "hi"}, {"who": "them", "message": "i'm doing well thanks"}]
+let ourMessages = []
 
-const Chat = ({navigation}) => {
-    const [message, setMessage] = React.useState('');
-    const [isPressed, setIsPressed] = React.useState(false)
+const Chat = ({route, navigation}) => {
+    const [message, setMessage] = React.useState("");
+    const [isPressed, setIsPressed] = React.useState(false);
+    const [messages, setMessages] = React.useState([]);
+
+    React.useLayoutEffect(() => {
+      navigation.setOptions({
+          title: route.params.userName,
+      });
+    }, [navigation]);
+
+    function handleMessage(msg) {
+      let info = JSON.parse(msg.data)
+      if (info.type === "handshake") {
+        views = [<View style={styles.placeHolder}></View>]
+        let messages1 = info.result
+        for (let i = 0; i < messages1.length; i++) {
+          if (messages1[i].who === "me") {
+            views.push(<View style={styles.myMessage}><Text style={styles.message}>{messages1[i].message}</Text></View>)
+          }
+          else if (messages1[i].who === "them") {
+            views.push(<View style={styles.theirMessage}><Text style={styles.message}>{messages1[i].message}</Text></View>)
+          }
+        }
+        ourMessages = info.result
+        setMessageViews(views)
+        setMessages(info.result)
+      }
+      else if (info.type === "message") {
+        if (info.from !== route.params.userName) return;
+        ourMessages.push({"who": "them", "message": info.message})
+        let copy = JSON.parse(JSON.stringify(ourMessages))
+        let views = [<View style={styles.placeHolder}></View>]
+        for (let i = 0; i < copy.length; i++) {
+          if (copy[i].who === "me") {
+            views.push(<View style={styles.myMessage}><Text style={styles.message}>{copy[i].message}</Text></View>)
+          }
+          else if (copy[i].who === "them") {
+            views.push(<View style={styles.theirMessage}><Text style={styles.message}>{copy[i].message}</Text></View>)
+          }
+        }
+        setMessages(copy);
+        setMessageViews(views);
+      }
+    }
+
+    const socketUrl = 'ws://10.50.38.167:8080';
+    const {
+        sendMessage,
+        sendJsonMessage,
+        lastMessage,
+        lastJsonMessage,
+        readyState,
+        getWebSocket
+    } = useWebSocket(socketUrl, {
+        onOpen: async () => {console.log('opened'); let token = await AsyncStorage.getItem("token"); sendMessage(`{"type": "handshake", "token": "${token}", "to": "${route.params.userName}"}`)},
+        onMessage: (message) => {handleMessage(message)},
+        shouldReconnect: (closeEvent) => true,
+    });
 
     let views = [<View style={styles.placeHolder}></View>]
     for (let i = 0; i < messages.length; i++) {
@@ -23,15 +81,22 @@ const Chat = ({navigation}) => {
     let buttonProps = {style: isPressed ? styles.appButtonContainerHigh : styles.appButtonContainer, onPress:() => {
         setIsPressed(false); 
         Keyboard.dismiss(); 
-        messages.push({"who": "me", "message": `${message}`}); 
+        ourMessages.push({"who": "me", "message": `${message}`}); 
+        setMessages(ourMessages)
         views.push(<View style={styles.myMessage}><Text style={styles.message}>{message}</Text></View>)
         setMessageViews(views);
+        let temporary = `${message}`
         setMessage("");
+        async function send() {
+          let token = await AsyncStorage.getItem("token")
+          sendMessage(`{"type": "message", "token": "${token}", "message": "${temporary}", "to":"${route.params.userName}"}`)
+        }
+        send()
       }
     }
     return (
       <>
-      <ScrollView style={styles.scrollView} children={messageViews}></ScrollView>
+      <ScrollView ref={ref => {this.scrollView = ref}} style={styles.scrollView} children={messageViews} onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}></ScrollView>
       <View style={styles.view}>
         <TouchableOpacity>
           <TextInput {...inputProps}/>
