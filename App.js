@@ -11,6 +11,8 @@ import ProfilePage from "./Components/ProfileComponent";
 import MessageComponent from './Components/MessageComponent';
 import Chat from './Components/ChatComponent';
 import ProfileSearch from './Components/ProfileSearchComponent'
+import MarketList from './Components/MarketListComponent';
+import Market from './Components/MarketComponent.js';
 
 const Stack = createNativeStackNavigator();
 const MyStack = () => {
@@ -26,6 +28,8 @@ const MyStack = () => {
         <Stack.Screen name = "Messages" component = {MessageComponent} options = {{title: 'Messages'}}/>
         <Stack.Screen name = "Chat" component = {Chat} options = {{title: 'Chat'}}/>
         <Stack.Screen name = "Profile Search" component = {ProfileSearch} options = {{title: 'Search'}}/>
+        <Stack.Screen name = "Market List" component = {MarketList} options = {{title: 'Markets'}}/>
+        <Stack.Screen name = "Market" component = {Market} options = {{title: 'View Market'}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

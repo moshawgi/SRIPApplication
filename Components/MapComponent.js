@@ -59,7 +59,7 @@ const Waiting_Driver_Screen = () => {
       markets = markets.result
       let newMarkers = [<Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude,}} title="Your Location"/>]
       for (let i = 0; i < markets.length; i++) {
-        newMarkers.push(<Marker coordinate={{latitude: markets[i].latitude, longitude: markets[i].longitude,}} title="Food Market"/>)
+        newMarkers.push(<Marker coordinate={{latitude: markets[i].latitude, longitude: markets[i].longitude,}} title={markets[i].address}/>)
       }
       setMarkers(newMarkers)
     }

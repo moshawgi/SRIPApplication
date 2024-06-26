@@ -11,6 +11,7 @@ const Screen = ({navigation}) => {
       <AppButton style = {styles.appButtonContainer} title="Profile Page" onPress={() => navigation.navigate('Profile')}/>
       <AppButton style = {styles.appButtonContainer} title="Messages" onPress={() => navigation.navigate('Messages')}/>
       <AppButton style = {styles.appButtonContainer} title="Profile Search" onPress={() => navigation.navigate('Profile Search')}/>
+      <AppButton style = {styles.appButtonContainer} title="Market List" onPress={() => navigation.navigate('Market List')}/>
     </>
 };
 
@@ -22,7 +23,9 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 12,
     width: 250,
-    alignSelf: 'center'
+    alignSelf: 'center',
+    margin: 7.5,
+    top: 150
   }
 }); 
 

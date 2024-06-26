@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
       height: 10
     },
     message: {
-      textAlign: "center",
+      textAlign: "left",
       fontSize: 16,
       maxWidth: 250,
       flex: 1,
