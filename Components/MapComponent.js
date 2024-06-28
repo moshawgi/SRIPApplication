@@ -34,7 +34,7 @@ const Waiting_Driver_Screen = () => {
         return;
       }
 
-      let location = await Location.getCurrentPositionAsync({});
+      let location = await Location.getLastKnownPositionAsync({});
       setMarkers([<Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude,}} title="Your Location"/>])
       setCurrentLocation(location.coords);
       setInitialRegion({

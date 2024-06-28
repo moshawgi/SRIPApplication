@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, ScrollView, Alert} from 'react-native';
 import AppButton from './AppButtonComponent.js';
-import ImageUploader from './ImageUploadComponent.js';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from 'axios';
@@ -114,53 +113,120 @@ const MarketAdd = ({navigation}) => {
     );
 };
 
+// const styles = StyleSheet.create({
+//     input: {
+//       height: 40,
+//       margin: 12,
+//       borderWidth: 1,
+//       padding: 10,
+//     },
+//     description: {
+//       paddingTop: 10,
+//       height: 150,
+//       margin: 12,
+//       borderWidth: 1,
+//       padding: 10,
+//       textAlignVertical: 'top'
+//     },
+//     submit: {
+//       top: 75
+//     },
+//     appButtonContainer: {
+//       elevation: 8,
+//       backgroundColor: "#009688",
+//       borderRadius: 10,
+//       paddingVertical: 10,
+//       paddingHorizontal: 12,
+//       width: 250,
+//       alignSelf: 'center'
+//     },
+//     dropdown: {
+//       margin: 12,
+//       height: 40,
+//       padding: 10,
+//       borderWidth: 1,
+//     },
+//     placeholderStyle: {
+//       fontSize: 16,
+//     },
+//     selectedTextStyle: {
+//       fontSize: 16,
+//     },
+//     iconStyle: {
+//       width: 20,
+//       height: 20,
+//     },
+//     inputSearchStyle: {
+//       height: 40,
+//       fontSize: 16,
+//     },
+// });
 const styles = StyleSheet.create({
-    input: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-    },
-    description: {
-      paddingTop: 10,
-      height: 150,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      textAlignVertical: 'top'
-    },
-    submit: {
-      top: 75
-    },
-    appButtonContainer: {
-      elevation: 8,
-      backgroundColor: "#009688",
-      borderRadius: 10,
-      paddingVertical: 10,
-      paddingHorizontal: 12,
-      width: 250,
-      alignSelf: 'center'
-    },
-    dropdown: {
-      margin: 12,
-      height: 40,
-      padding: 10,
-      borderWidth: 1,
-    },
-    placeholderStyle: {
-      fontSize: 16,
-    },
-    selectedTextStyle: {
-      fontSize: 16,
-    },
-    iconStyle: {
-      width: 20,
-      height: 20,
-    },
-    inputSearchStyle: {
-      height: 40,
-      fontSize: 16,
-    },
+  input: {
+    height: 50,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    backgroundColor: '#f9f9f9',
+    fontSize: 16,
+  },
+  description: {
+    height: 150,
+    marginVertical: 10,
+    marginHorizontal: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    backgroundColor: '#f9f9f9',
+    fontSize: 16,
+    textAlignVertical: 'top',
+  },
+  submit: {
+    marginVertical: 30,
+  },
+  appButtonContainer: {
+    backgroundColor: "#4CAF50",
+    borderRadius: 25,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    alignSelf: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    elevation: 5,
+  },
+  dropdown: {
+    marginVertical: 10,
+    marginHorizontal: 20,
+    height: 50,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    backgroundColor: '#f9f9f9',
+  },
+  placeholderStyle: {
+    fontSize: 16,
+    color: '#999',
+  },
+  selectedTextStyle: {
+    fontSize: 16,
+    color: '#333',
+  },
+  iconStyle: {
+    width: 20,
+    height: 20,
+  },
+  inputSearchStyle: {
+    height: 50,
+    fontSize: 16,
+  },
 });
 
 export default MarketAdd

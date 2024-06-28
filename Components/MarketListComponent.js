@@ -19,19 +19,14 @@ const MarketSearchComponent = ({navigation}) => {
     };
 
     React.useEffect(() => {
-      console.log("OK")
       const getLocation = async () => {
-        console.log("HUH")
         let { status } = await Location.requestForegroundPermissionsAsync();
-        console.log("BRUH")
         if (status !== "granted") {
           console.log("Permission to access location was denied");
           createTwoButtonAlert("Permissions Denied", "Please grant this app location permissions")
           return;
         }
-        console.log("WHAT")
-        let location = await Location.getCurrentPositionAsync({});
-        console.log("GOOD")
+        let location = await Location.getLastKnownPositionAsync({});
         getMarkets(location)
       };
   
@@ -83,11 +78,12 @@ const styles = StyleSheet.create({
   messages: {
     position: 'absolute',
     alignSelf: 'center',
-    top: 50,
     color: "gray",
     flex: 1,
     flexWrap: "wrap",
-    width: 250
+    width: 300,
+    textAlign: 'center',
+    bottom: 10
   }
 });
 

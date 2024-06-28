@@ -77,8 +77,8 @@ const Chat = ({route, navigation}) => {
 
     const [messageViews, setMessageViews] = React.useState(views)
 
-    let inputProps = {style: isPressed ? styles.inputHigh : styles.input, onTouchStart:() => {setIsPressed(true)},  placeholder: "Send a message", value: message, onChangeText: setMessage}
-    let buttonProps = {style: isPressed ? styles.appButtonContainerHigh : styles.appButtonContainer, onPress:() => {
+    let inputProps = {style: styles.input, onTouchStart:() => {setIsPressed(true)},  placeholder: "Send a message", value: message, onChangeText: setMessage}
+    let buttonProps = {style: styles.appButtonContainer, onPress:() => {
         setIsPressed(false); 
         Keyboard.dismiss(); 
         ourMessages.push({"who": "me", "message": `${message}`}); 
@@ -94,10 +94,12 @@ const Chat = ({route, navigation}) => {
         send()
       }
     }
+    let scrollViewProps = {style: isPressed ? styles.scrollViewHigh : styles.scrollView, ref: ref => {this.scrollView = ref}, children: messageViews, onContentSizeChange: () => {this.scrollView.scrollToEnd({animated: true})}}
+    let viewProps = {style: isPressed? styles.viewHigh : styles.view}
     return (
       <>
-      <ScrollView ref={ref => {this.scrollView = ref}} style={styles.scrollView} children={messageViews} onContentSizeChange={() => this.scrollView.scrollToEnd({animated: true})}></ScrollView>
-      <View style={styles.view}>
+      <ScrollView {...scrollViewProps}></ScrollView>
+      <View {...viewProps}>
         <TouchableOpacity>
           <TextInput {...inputProps}/>
         </TouchableOpacity>
@@ -151,14 +153,27 @@ const styles = StyleSheet.create({
       height: 10,
       flex: 1,
     },
+    scrollViewHigh: {
+      borderWidth: 0,
+      backgroundColor:'white',
+      height: 10,
+      flex: 1,
+      top: -310
+    },
     view: {
       borderWidth: 0,
       flex: 0.2,
       backgroundColor: 'white',
     },
+    viewHigh: {
+      borderWidth: 0,
+      flex: 0.2,
+      backgroundColor: 'white',
+      top: -310
+    },
     input: {
       position: "absolute",
-      top: 40,
+      top: 30,
       height: 40,
       borderWidth: 1,
       padding: 10,
@@ -167,7 +182,7 @@ const styles = StyleSheet.create({
       borderRadius: 100,
     },
     inputHigh: {
-      top: -270,
+      top: -280,
       height: 40,
       borderWidth: 1,
       padding: 10,
@@ -186,7 +201,7 @@ const styles = StyleSheet.create({
       width: 40,
       height: 40,
       alignSelf: 'center',
-      top: 40
+      top: 30
     },
     appButtonContainerHigh: {
       position: 'absolute',
@@ -199,7 +214,7 @@ const styles = StyleSheet.create({
       width: 40,
       height: 40,
       alignSelf: 'center',
-      top: -270
+      top: -280
     },
     signUpContainer: {
       top: 50

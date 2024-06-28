@@ -4,6 +4,7 @@ import { SearchBar } from 'react-native-elements';
 import axios from 'axios'
 import AppButton from './AppButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 const ProfileSearchComponent = ({navigation}) => {
     const [profiles, setProfiles] = React.useState([])
@@ -30,31 +31,49 @@ const ProfileSearchComponent = ({navigation}) => {
       }
       let children = []
       for (let i = 0; i < query.length; i++) {
-        let userName = query[i].firstName + " " + query[i].lastName + "\n(" + query[i].userName + ")"
+        let userName = query[i].firstName + " " + query[i].lastName
         let message = query[i].accountType
-        children.push(<TouchableOpacity onPress = {function() {navigation.navigate("Chat", {userName: query[i].userName})}}><View style={styles.section}><Image style = {styles.pfp} source={require('../assets/pfp.png')}/><Text style={styles.userName}>{userName}</Text><Text style={styles.messages}>{message}</Text></View></TouchableOpacity>)
+        let imageURI = await axios.post('http://10.50.38.167:3300/auth/checkphoto', {userName: query[i].userName})
+        imageURI = imageURI.data
+        if (imageURI.result) {
+          imageURI = imageURI.result
+        }
+        else {
+          imageURI = "pfp.png"
+        }
+        imageURI = "http://10.50.38.167:3300/" + imageURI
+        children.push(<TouchableOpacity onPress = {function() {navigation.navigate("Chat", {userName: query[i].userName})}}><View style={styles.section}><Image style = {styles.pfp} source={{uri: imageURI}}/><Text style={styles.userName}>{userName}</Text><Text style={styles.messages}>{message}</Text></View></TouchableOpacity>)
       }
       setProfiles(children)
     }
-
-    async function main() {
-      if (!bool) {return 0}
-      let token = await AsyncStorage.getItem("token")
-      let query = await axios.post('http://10.50.38.167:3300/auth/profilesearch', {sendingQuery: false, token: token})
-      query = query.data
-      if (query.success) {
-        query = query.result
+    useFocusEffect(() => {
+      async function main() {
+        if (!bool) {return 0}
+        let token = await AsyncStorage.getItem("token")
+        let query = await axios.post('http://10.50.38.167:3300/auth/profilesearch', {sendingQuery: false, token: token})
+        query = query.data
+        if (query.success) {
+          query = query.result
+        }
+        let children = []
+        for (let i = 0; i < query.length; i++) {
+          let userName = query[i].firstName + " " + query[i].lastName
+          let message = query[i].accountType
+          let imageURI = await axios.post('http://10.50.38.167:3300/auth/checkphoto', {userName: query[i].userName})
+          imageURI = imageURI.data
+          if (imageURI.result) {
+            imageURI = imageURI.result
+          }
+          else {
+            imageURI = "pfp.png"
+          }
+          imageURI = "http://10.50.38.167:3300/" + imageURI
+          children.push(<TouchableOpacity onPress = {function() {navigation.navigate("Chat", {userName: query[i].userName})}}><View style={styles.section}><Image style = {styles.pfp} source={{uri: imageURI}}/><Text style={styles.userName}>{userName}</Text><Text style={styles.messages}>{message}</Text></View></TouchableOpacity>)
+        }
+        setProfiles(children)
+        setBool(false)
       }
-      let children = []
-      for (let i = 0; i < query.length; i++) {
-        let userName = query[i].firstName + " " + query[i].lastName + "\n(" + query[i].userName + ")"
-        let message = query[i].accountType
-        children.push(<TouchableOpacity onPress = {function() {navigation.navigate("Chat", {userName: query[i].userName})}}><View style={styles.section}><Image style = {styles.pfp} source={require('../assets/pfp.png')}/><Text style={styles.userName}>{userName}</Text><Text style={styles.messages}>{message}</Text></View></TouchableOpacity>)
-      }
-      setProfiles(children)
-      setBool(false)
-    }
-    main()
+      main()})
     return (
       <>
       <SearchBar placeholder="Search Here" onChangeText={(text) => queryUsers(text)} value={search} inputContainerStyle={styles.searchBar} style={styles.search}/>
@@ -64,13 +83,43 @@ const ProfileSearchComponent = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
-    search: {
-      zIndex: -10
-    },
     section: {
       height: 100,
       borderWidth: 0.5,
+      borderColor: '#ddd',
       padding: 10,
+      flex: 1,
+      flexWrap: 'wrap',
+      textAlign: 'center',
+      backgroundColor: '#f8f8f8',
+      borderRadius: 10,
+      marginVertical: 5,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 1 },
+      shadowOpacity: 0.3,
+      shadowRadius: 2,
+      elevation: 2,
+    },
+    userName: {
+      position: 'absolute',
+      alignSelf: 'center',
+      fontSize: 15,
+      fontWeight: '600',
+      top: 25,
+      flex: 1,
+      flexWrap: 'wrap',
+      color: '#333',
+    },
+    messages: {
+      position: 'absolute',
+      alignSelf: 'center',
+      color: 'gray',
+      flex: 1,
+      flexWrap: 'wrap',
+      width: 300,
+      textAlign: 'center',
+      marginTop: 60,
+      fontSize: 13,
     },
     pfp: {
       position: "relative",
@@ -78,21 +127,8 @@ const styles = StyleSheet.create({
       top: 10,
       height: 60,
       width: 60,
+      borderRadius: 50
     },
-    userName: {
-      position: 'absolute',
-      left: 100,
-      fontSize: 15,
-      top: 25,
-      flex: 1,
-      flexWrap: 'wrap'
-    },
-    messages: {
-      position: 'absolute',
-      left: 100,
-      top: 70,
-      color: "gray"
-    }
 });
 
 export default ProfileSearchComponent;

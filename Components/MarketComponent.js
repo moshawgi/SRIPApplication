@@ -23,63 +23,74 @@ const Market = ({route, navigation}) => {
 
     return (
       <>
-      <ScrollView>
+      {/* <ScrollView>
+        <Text style={[styles.text, styles.header]}>Address:</Text>
         <Text style={styles.text}>{address}</Text>
-        <Text style={styles.text}>{description}</Text>
-        <Text style={styles.text}>{foods}</Text>
         <Text style={styles.text}></Text>
-      </ScrollView>
+        <Text style={[styles.text, styles.header]}>Description:</Text>
+        <Text style={styles.text}>{description}</Text>
+        <Text style={styles.text}></Text>
+        <Text style={[styles.text, styles.header]}>Foods:</Text>
+        <Text style={styles.text}>{foods}</Text>
+      </ScrollView> */}
+    <ScrollView contentContainerStyle={styles.container}>
+            <View style={styles.section}>
+                <Text style={styles.header}>Address:</Text>
+                <Text style={styles.text}>{address}</Text>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.header}>Description:</Text>
+                <Text style={styles.text}>{description}</Text>
+            </View>
+            <View style={styles.section}>
+                <Text style={styles.header}>Foods:</Text>
+                <Text style={styles.text}>{foods}</Text>
+            </View>
+    </ScrollView>
       </>
     );
 };
 
+// const styles = StyleSheet.create({
+//   header: {
+//     fontWeight: "bold",
+//     fontSize: 30
+//   },
+//   text: {
+//     fontSize: 16,
+//     color: '#333',
+//     margin: 12,
+//     borderColor: '#ccc',
+//     borderRadius: 5,
+//     padding: 10,
+//   },
+// });
+
 const styles = StyleSheet.create({
-    text: {
-      height: 40,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-    },
-    description: {
-      paddingTop: 10,
-      height: 150,
-      margin: 12,
-      borderWidth: 1,
-      padding: 10,
-      textAlignVertical: 'top'
-    },
-    submit: {
-      top: 75
-    },
-    appButtonContainer: {
-      elevation: 8,
-      backgroundColor: "#009688",
-      borderRadius: 10,
-      paddingVertical: 10,
-      paddingHorizontal: 12,
-      width: 250,
-      alignSelf: 'center'
-    },
-    dropdown: {
-      margin: 12,
-      height: 40,
-      padding: 10,
-      borderWidth: 1,
-    },
-    placeholderStyle: {
+  container: {
+      flexGrow: 1,
+      backgroundColor: '#f5f5f5',
+      paddingVertical: 20,
+      paddingHorizontal: 16,
+  },
+  section: {
+      marginBottom: 20,
+  },
+  header: {
+      fontSize: 24,
+      fontWeight: 'bold',
+      marginBottom: 8,
+      color: '#333',
+  },
+  text: {
       fontSize: 16,
-    },
-    selectedTextStyle: {
-      fontSize: 16,
-    },
-    iconStyle: {
-      width: 20,
-      height: 20,
-    },
-    inputSearchStyle: {
-      height: 40,
-      fontSize: 16,
-    },
+      color: '#666',
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 8,
+      padding: 12,
+      backgroundColor: '#fff',
+  },
 });
 
 export default Market
