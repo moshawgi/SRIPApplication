@@ -4,6 +4,8 @@ import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
 import axios from 'axios'
 import { useFocusEffect } from '@react-navigation/native';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 TouchableOpacity.defaultProps = { activeOpacity: 0.8 }
 
@@ -33,7 +35,7 @@ const DashBoard = ({navigation}) => {
           return;
         }
         let location = await Location.getLastKnownPositionAsync({});
-        setMarkers([<Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude,}} title="Your Location"/>])
+        setMarkers([<Marker key="You" coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude,}} title="Your Location"/>])
         setCurrentLocation(location.coords);
         setInitialRegion({
           latitude: location.coords.latitude,
@@ -45,7 +47,7 @@ const DashBoard = ({navigation}) => {
       };
   
       const getMarkets = async (location) => {
-        let markets = await axios.post('http://10.50.38.167:3300/auth/marketfind', {
+        let markets = await axios.post('http://' + IP + ':3300/auth/marketfind', {
           coordinates: [location.coords.latitude, location.coords.longitude],
           radius: 100000000000000,
           miles: true
@@ -57,11 +59,11 @@ const DashBoard = ({navigation}) => {
         markets = markets.result
         let children = []
         for (let i = 0; i < markets.length; i++) {
-          children.push(<TouchableOpacity onPress = {function() {navigation.navigate("Market", {address: markets[i].address})}}><View style={styles.section}><Text style={styles.userName}>{markets[i].address}</Text><View style={styles.messages}><Text style={styles.message}>{markets[i].description}</Text></View></View></TouchableOpacity>)
+          children.push(<TouchableOpacity key={markets[i].address} onPress = {function() {navigation.navigate("Market", {address: markets[i].address})}}><View style={styles.section}><Text style={styles.userName}>{markets[i].address}</Text><View style={styles.messages}><Text style={styles.message}>{markets[i].description}</Text></View></View></TouchableOpacity>)
         }
-        let newMarkers = [<Marker coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude,}} title="Your Location"/>]
+        let newMarkers = [<Marker key="you" coordinate={{latitude: location.coords.latitude, longitude: location.coords.longitude,}} title="Your Location"/>]
         for (let i = 0; i < markets.length; i++) {
-            newMarkers.push(<Marker coordinate={{latitude: markets[i].latitude, longitude: markets[i].longitude,}} title={markets[i].address}/>)
+            newMarkers.push(<Marker key={markets[i].address} coordinate={{latitude: markets[i].latitude, longitude: markets[i].longitude,}} title={markets[i].address}/>)
         }
         setMarkers(newMarkers)
         setDisplayMarkets(children)
@@ -134,6 +136,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 2,
     elevation: 2,
+    marginHorizontal: 5
   },
   userName: {
     position: 'absolute',
@@ -167,7 +170,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   container: {
-    height: 450,
+    height: 500,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#f0f0f0',

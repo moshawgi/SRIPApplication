@@ -5,6 +5,8 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from 'axios';
 import AppButton from './AppButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 const SignUp = ({navigation}) => {
     const [firstName, setFirstName] = React.useState('');
@@ -112,7 +114,7 @@ const SignUp = ({navigation}) => {
             createTwoButtonAlert("Alert", "Passwords must match!");
             return 0;
           }
-          axios.post('http://10.50.38.167:3300/auth/signup', {
+          axios.post('http://' + IP + ':3300/auth/signup', {
               userName:email,
               password:password,
               accountType: value,

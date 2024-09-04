@@ -2,6 +2,8 @@ import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, ScrollView, Alert} from 'react-native';
 import axios from 'axios';
 import { registerCustomIconType } from 'react-native-elements';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 
 const Market = ({route, navigation}) => {
@@ -11,7 +13,7 @@ const Market = ({route, navigation}) => {
     
     React.useEffect(() => {
         async function getInfo() {
-          let market = await axios.post('http://10.50.38.167:3300/auth/getmarket', {"address": route.params.address})
+          let market = await axios.post('http://' + IP + ':3300/auth/getmarket', {"address": route.params.address})
           market = market.data[0]
           console.log(market)
           setFoods(market.foods)

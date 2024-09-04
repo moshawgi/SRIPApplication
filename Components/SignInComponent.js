@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropdownComponent from './DropdownComponent';
 import axios from 'axios'
 import AppButton from './AppButtonComponent';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 const SignIn = ({navigation}) => {
     const [email, setEmail] = React.useState('');
@@ -21,7 +23,7 @@ const SignIn = ({navigation}) => {
     };
     return (
       <>
-      <Text style={styles.header}>Sign in below!</Text>
+      <Text style={styles.header}>Sign in</Text>
       <TextInput
         style={styles.input}
         onChangeText = {setEmail}
@@ -35,7 +37,7 @@ const SignIn = ({navigation}) => {
         style = {styles.appButtonContainer}
         title="Sign In"
         onPress={() => {
-            axios.post('http://10.50.38.167:3300/auth/login', {
+            axios.post('http://' + IP + ':3300/auth/login', {
                 userName:email,
                 password:password
             })
@@ -70,7 +72,7 @@ const SignIn = ({navigation}) => {
 const styles = StyleSheet.create({
   header: {
     marginTop: 70,
-    marginBottom: 45,
+    marginBottom: 35,
     alignSelf: 'center',
     alignContent: 'center',
     fontSize: 30,

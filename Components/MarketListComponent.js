@@ -3,6 +3,8 @@ import {Button, Text, StyleSheet, TextInput, View, Alert, ScrollView, Image, Tou
 import * as Location from "expo-location";
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 const MarketSearchComponent = ({navigation}) => {
     const [displayMarkets, setDisplayMarkets] = React.useState([])
@@ -31,7 +33,7 @@ const MarketSearchComponent = ({navigation}) => {
       };
   
       const getMarkets = async (location) => {
-        let markets = await axios.post('http://10.50.38.167:3300/auth/marketfind', {
+        let markets = await axios.post('http://' + IP + ':3300/auth/marketfind', {
           coordinates: [location.coords.latitude, location.coords.longitude],
           radius: 10,
           miles: true

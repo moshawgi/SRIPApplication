@@ -3,6 +3,8 @@ import {StyleSheet, View, TouchableOpacity, Text, Dimensions, Image} from "react
 import * as Location from "expo-location";
 import MapView, { Marker } from "react-native-maps";
 import axios from 'axios';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -47,7 +49,7 @@ const Waiting_Driver_Screen = () => {
     };
 
     const getMarkets = async (location) => {
-      let markets = await axios.post('http://10.50.38.167:3300/auth/marketfind', {
+      let markets = await axios.post('http://' + IP + ':3300/auth/marketfind', {
         coordinates: [location.coords.latitude, location.coords.longitude],
         radius: 10,
         miles: true

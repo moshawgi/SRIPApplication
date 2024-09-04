@@ -4,6 +4,8 @@ import { useFocusEffect } from '@react-navigation/native';
 import axios from 'axios'
 import AppButton from './AppButtonComponent';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 const MessageComponent = ({navigation}) => {
     const [children, setChildren] = React.useState([])
@@ -22,13 +24,13 @@ const MessageComponent = ({navigation}) => {
     useFocusEffect(React.useCallback(() => {
       async function getChildren() {
         let token = await AsyncStorage.getItem("token")
-        let messages = await axios.post('http://10.50.38.167:3300/auth/messagefind', {token:token})
+        let messages = await axios.post('http://' + IP + ':3300/auth/messagefind', {token:token})
         messages = messages.data.result
         let messageChildren = []
         for (let i = 0; i < messages.length; i++) {
           let userName = messages[i].userName
           let message = messages[i].message
-          let imageURI = await axios.post('http://10.50.38.167:3300/auth/checkphoto', {userName: userName})
+          let imageURI = await axios.post('http://' + IP + ':3300/auth/checkphoto', {userName: userName})
           imageURI = imageURI.data
           if (imageURI.result) {
             imageURI = imageURI.result
@@ -37,8 +39,8 @@ const MessageComponent = ({navigation}) => {
             imageURI = "pfp.png"
           }
           console.log(imageURI)
-          imageURI = "http://10.50.38.167:3300/" + imageURI
-          messageChildren.push(<TouchableOpacity onPress = {function() {navigation.navigate("Chat", {userName: messages[i].userName})}}><View style={styles.section}><Image style = {styles.pfp} source={{uri: imageURI}}/><Text style={styles.userName}>{userName}</Text><Text style={styles.messages}>{message}</Text></View></TouchableOpacity>)
+          imageURI = 'http://' + IP + ':3300/' + imageURI
+          messageChildren.push(<TouchableOpacity key={imageURI + userName} onPress = {function() {navigation.navigate("Chat", {userName: messages[i].userName})}}><View style={styles.section}><Image style = {styles.pfp} source={{uri: imageURI}}/><Text style={styles.userName}>{userName}</Text><Text style={styles.messages}>{message}</Text></View></TouchableOpacity>)
         }
         setChildren(messageChildren)
       }
@@ -46,6 +48,7 @@ const MessageComponent = ({navigation}) => {
     }, []))
     return (
       <>
+      <Text style={styles.header}>Messages</Text>
       <ScrollView children={children}>
       </ScrollView>
       </>
@@ -53,9 +56,16 @@ const MessageComponent = ({navigation}) => {
 }
 
 const styles = StyleSheet.create({
+    header: {
+      marginTop: 70,
+      marginBottom: 15,
+      alignSelf: 'center',
+      alignContent: 'center',
+      fontSize: 30,
+      fontWeight: 'bold'
+    },
     section: {
       height: 100,
-      borderWidth: 0.5,
       padding: 10,
     },
     pfp: {

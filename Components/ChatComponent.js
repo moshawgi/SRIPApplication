@@ -2,6 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as React from 'react';
 import {Button, Text, StyleSheet, TextInput, View, Alert, TouchableOpacity, Image, Keyboard, ScrollView} from 'react-native';
 import useWebSocket from 'react-native-use-websocket';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 let ourMessages = []
 
@@ -51,7 +53,7 @@ const Chat = ({route, navigation}) => {
       }
     }
 
-    const socketUrl = 'ws://10.50.38.167:8080';
+    const socketUrl = 'ws://' + IP + ':8080';
     const {
         sendMessage,
         sendJsonMessage,
@@ -130,7 +132,7 @@ const styles = StyleSheet.create({
       top: 0,
       alignSelf: "flex-end",
       marginRight: 10,
-      marginTop: 5,
+      marginTop: 7,
       flex: 1,
       flexWrap: "wrap",
       padding: 10
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
       backgroundColor: "#E5E5E5",
       verticalAlign: "center",
       marginLeft: 10,
-      marginTop: 5,
+      marginTop: 7,
       alignSelf: "flex-start",
       flex: 1,
       flexWrap: "wrap",

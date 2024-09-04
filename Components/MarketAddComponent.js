@@ -4,6 +4,8 @@ import AppButton from './AppButtonComponent.js';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from 'axios';
+import AppInfo from "../AppInfo";
+const IP = AppInfo.IP;
 
 
 const MarketAdd = ({navigation}) => {
@@ -35,6 +37,7 @@ const MarketAdd = ({navigation}) => {
 
     return (
       <>
+      <Text style={styles.header}>Submit a market</Text>
       <ScrollView>
       <TextInput
         style={styles.input}
@@ -67,7 +70,7 @@ const MarketAdd = ({navigation}) => {
         />
       </View>
       <TextInput
-        style={styles.description}
+        style={styles.foods}
         onChangeText = {setFoods}
         placeholder="Foods being sold"
         multiline = {true}
@@ -83,7 +86,7 @@ const MarketAdd = ({navigation}) => {
         style={styles.appButtonContainer}
         title="Submit Market"
         onPress={() => {
-          axios.post('http://10.50.38.167:3300/auth/marketadd', {
+          axios.post('http://' + IP + ':3300/auth/marketadd', {
               address:address,
               foods:foods,
               description: description,
@@ -113,107 +116,78 @@ const MarketAdd = ({navigation}) => {
     );
 };
 
-// const styles = StyleSheet.create({
-//     input: {
-//       height: 40,
-//       margin: 12,
-//       borderWidth: 1,
-//       padding: 10,
-//     },
-//     description: {
-//       paddingTop: 10,
-//       height: 150,
-//       margin: 12,
-//       borderWidth: 1,
-//       padding: 10,
-//       textAlignVertical: 'top'
-//     },
-//     submit: {
-//       top: 75
-//     },
-//     appButtonContainer: {
-//       elevation: 8,
-//       backgroundColor: "#009688",
-//       borderRadius: 10,
-//       paddingVertical: 10,
-//       paddingHorizontal: 12,
-//       width: 250,
-//       alignSelf: 'center'
-//     },
-//     dropdown: {
-//       margin: 12,
-//       height: 40,
-//       padding: 10,
-//       borderWidth: 1,
-//     },
-//     placeholderStyle: {
-//       fontSize: 16,
-//     },
-//     selectedTextStyle: {
-//       fontSize: 16,
-//     },
-//     iconStyle: {
-//       width: 20,
-//       height: 20,
-//     },
-//     inputSearchStyle: {
-//       height: 40,
-//       fontSize: 16,
-//     },
-// });
 const styles = StyleSheet.create({
+  header: {
+    marginTop: 90,
+    marginBottom: 25,
+    alignSelf: 'center',
+    alignContent: 'center',
+    fontSize: 30,
+    fontWeight: 'bold'
+  },
+  subheader: {
+    alignSelf: 'center',
+    alignContent: 'center',
+    marginBottom: 30
+  },
   input: {
-    height: 50,
-    marginVertical: 10,
-    marginHorizontal: 20,
+    height: 55,
+    marginVertical: 6,
+    marginHorizontal: 25,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    backgroundColor: '#f9f9f9',
-    fontSize: 16,
+    padding: 10,
+    borderRadius: 5,
+    borderColor: '#666',
   },
   description: {
     height: 150,
-    marginVertical: 10,
-    marginHorizontal: 20,
+    marginVertical: 12,
+    marginHorizontal: 25,
     borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    backgroundColor: '#f9f9f9',
-    fontSize: 16,
-    textAlignVertical: 'top',
+    paddingTop: 14,
+    padding: 10,
+    borderRadius: 5,
+    borderColor: '#666',
+    textAlignVertical: 'top'
+  },
+  foods: {
+    height: 100,
+    marginVertical: 12,
+    marginHorizontal: 25,
+    borderWidth: 1,
+    paddingTop: 12,
+    padding: 10,
+    borderRadius: 5,
+    borderColor: '#666',
+    textAlignVertical: 'top'
   },
   submit: {
-    marginVertical: 30,
+    top: 20,
+    alignSelf: 'center'
   },
   appButtonContainer: {
-    backgroundColor: "#4CAF50",
-    borderRadius: 25,
-    paddingVertical: 15,
-    paddingHorizontal: 30,
+    elevation: 8,
+    backgroundColor: "#0E64D2",
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
     alignSelf: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.3,
-    shadowRadius: 3,
-    elevation: 5,
+    width: 340,
+    height: 55,
+    justifyContent: 'center',
   },
   dropdown: {
     marginVertical: 10,
-    marginHorizontal: 20,
+    marginHorizontal: 25,
     height: 50,
-    borderColor: '#ccc',
+    borderColor: '#666',
     borderWidth: 1,
     borderRadius: 8,
     paddingHorizontal: 15,
-    backgroundColor: '#f9f9f9',
   },
   placeholderStyle: {
     fontSize: 16,
-    color: '#999',
+    color: '#666',
   },
   selectedTextStyle: {
     fontSize: 16,
@@ -224,7 +198,7 @@ const styles = StyleSheet.create({
     height: 20,
   },
   inputSearchStyle: {
-    height: 50,
+    height: 55,
     fontSize: 16,
   },
 });
