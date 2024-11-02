@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, Text, StyleSheet, TextInput, View, Alert} from 'react-native';
+import {Button, Text, StyleSheet, TextInput, View, Alert, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DropdownComponent from './DropdownComponent';
 import axios from 'axios'
@@ -23,6 +23,7 @@ const SignIn = ({navigation}) => {
     };
     return (
       <>
+      <ScrollView>
       <Text style={styles.header}>Sign in</Text>
       <TextInput
         style={styles.input}
@@ -65,6 +66,7 @@ const SignIn = ({navigation}) => {
       <Text style={{textDecorationLine: 'underline', top: 8, fontSize: 17}}>Don't have an account yet?</Text>
       <Button title="Sign Up" onPress={() => navigation.navigate('Register')}/>
       </View>
+      </ScrollView>
       </>
     );
 }

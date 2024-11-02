@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, Text, StyleSheet, TextInput, View, Alert} from 'react-native';
+import {Button, Text, StyleSheet, TextInput, View, Alert, ScrollView} from 'react-native';
 import { Dropdown } from 'react-native-element-dropdown';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import axios from 'axios';
@@ -53,6 +53,7 @@ const SignUp = ({navigation}) => {
 
     return (
       <>
+      <ScrollView>
       <Text style={styles.header}>Create an account</Text>
       <Text style={styles.subheader}>Connect with people near you today!</Text>
       <TextInput
@@ -141,6 +142,7 @@ const SignUp = ({navigation}) => {
       <Text style={{textDecorationLine: 'underline', top: 8, fontSize: 17}}>Already have an account?</Text>
       <Button title="Sign In" onPress={() => navigation.navigate('Login')}/>
       </View>
+      </ScrollView>
       </>
     );
 };

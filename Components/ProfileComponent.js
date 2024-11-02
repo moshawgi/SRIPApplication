@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Button, Text, StyleSheet, TextInput, View, TouchableOpacity, Image, Platform} from 'react-native';
+import {Button, Text, StyleSheet, TextInput, View, TouchableOpacity, Image, Platform, ScrollView} from 'react-native';
 import AppButton from './AppButtonComponent';
 import { AntDesign } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
@@ -72,6 +72,7 @@ const ProfilePage = ({navigation}) => {
   
     return (
       <>
+      <ScrollView>
       <View style={imageUploaderStyles.container}>
         {
             image  && <Image source={{ uri: image.uri }} style={{ width: 150, height: 150 }} />
@@ -100,6 +101,7 @@ const ProfilePage = ({navigation}) => {
       <AppButton style={styles.appButtonContainer} title="Save Changes" onPress={handleUploadPhoto}/>
       <AppButton style = {[styles.appButtonContainer, styles.logoutButton]} title="Logout" onPress={() => {AsyncStorage.removeItem("token"); navigation.navigate('Register')}}/>
       </View>
+      </ScrollView>
       </>
     );
 }
